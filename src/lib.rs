@@ -1,5 +1,5 @@
 mod utils;
-use sha2::{Digest, Sha256};
+use sha2::{Digest, Sha256, Sha512};
 use wasm_bindgen::prelude::*;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -52,6 +52,16 @@ pub fn run_fibonacci(n: u64) -> u64 {
 #[wasm_bindgen]
 pub fn sha256(input: String) -> String {
     let mut hasher = Sha256::new();
+    hasher.update(input);
+    let result = hasher.finalize();
+    let string = format!("{:x}", result);
+    println!("{}", string);
+    string
+}
+
+#[wasm_bindgen]
+pub fn sha512(input: String) -> String {
+    let mut hasher = Sha512::new();
     hasher.update(input);
     let result = hasher.finalize();
     let string = format!("{:x}", result);

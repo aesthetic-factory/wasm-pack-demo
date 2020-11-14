@@ -55,7 +55,6 @@ pub fn sha256(input: String) -> String {
     hasher.update(input);
     let result = hasher.finalize();
     let string = format!("{:x}", result);
-    println!("{}", string);
     string
 }
 
@@ -65,6 +64,12 @@ pub fn sha512(input: String) -> String {
     hasher.update(input);
     let result = hasher.finalize();
     let string = format!("{:x}", result);
-    println!("{}", string);
     string
+}
+
+#[wasm_bindgen]
+pub fn blake3_256(input: String) -> String {
+    let result = blake3::hash(input.as_bytes());
+    let hex = result.to_hex();
+    String::from(hex.as_str())
 }
